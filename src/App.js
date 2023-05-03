@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
+import Main from "./pages/main";
+import Root from "./root";
+import Detail from "./pages/detail";
+import NotFound404 from "./components/error/notFound404";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient()
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root/>,
+    errorElement : <NotFound404/>,
+    children : [
+      {
+        index:true,
+        element: <Main/>
+      },
+      {
+        path:"/detail/:detailId",
+        element:<Detail/>
+      }
+    ]
+  }
+])
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <QueryClientProvider client={queryClient} >
+      <RouterProvider router={router}/>
+      <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
+  )
 }
 
 export default App;

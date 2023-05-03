@@ -1,0 +1,15 @@
+header {
+  @include flex($alignItems:center, $justifyContent:space-between);
+  padding:20px 20px 0;
+
+  .logo {
+    font-size:1.6rem;
+  }
+}
+
+.container {
+  padding:30px 20px 0;
+  &.list {
+    padding:30px 15px 0;
+  }
+}
